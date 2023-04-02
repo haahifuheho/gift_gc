@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Web3 from 'web3';
 import "./App.css";
 import abi from "./contracts/GiftNFT.json";
+import giftbox from "./images/giftbox.jpg";
 
 function App() {
     const [message, setMessage] = useState("");
@@ -63,17 +64,19 @@ function App() {
     };
 
     return (
-        <div>
+        <div className="style_a">
             <h1>Gift Greeting Card NFT</h1>
             <label>
-                Message:
+                Message: 
                 <input type="text" onChange={(e) => setMessage(e.target.value)} />
             </label>
             <br />
+            <br />
             <label>
-                Recipient:
+                Recipient: 
                 <input type="text" onChange={(e) => setRecipient(e.target.value)} />
             </label>
+            <br />
             <br />
             <button onClick={giftNFT}>Gift</button>
             {tokenId && (
@@ -83,8 +86,14 @@ function App() {
                     <p>Recipient: {recipient}</p>
                 </div>
             )}
+             <br />
             {successMessage && <p>{successMessage}</p>}
             {errorMessage && <p>{errorMessage}</p>} 
+            <br />
+            <img src={giftbox} alt="giftbox"/>
+            <br />
+            <br />
+            <label>This message stays forever because it's full on chain!</label>
         </div>
     );
 }
