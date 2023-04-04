@@ -3,10 +3,13 @@ import Web3 from 'web3';
 import "./App.css";
 import abi from "./contracts/GiftNFT.json";
 import giftbox from "./images/giftbox.jpg";
+import emailjs from "emailjs-com";
+emailjs.init('o5z8BrXFZtZW3NYAJ');
 
 function Gifting() {
     const [message, setMessage] = useState("");
     const [recipient, setRecipient] = useState("");
+    const [emailto, setEmailto] = useState("");
     const [tokenId, setTokenId] = useState("");
 
     const [web3, setWeb3] = useState(null);
@@ -57,6 +60,14 @@ function Gifting() {
                 setTokenId(newTokenId);
                 setSuccessMessage(`Gifted NFT with Token ID: ${newTokenId}`);
             }
+                const emailjsServiceId = "service_iakpmq7";
+                const emailjsTemplateId = "template_lk4s8w6";
+                const templateParams = {
+                    from_name: emailto,
+                    mail_message: message
+                };
+                emailjs.send(emailjsServiceId,emailjsTemplateId, templateParams).then(()=>{
+                });
         } catch (error) {
             console.error(error);
             setErrorMessage("Failed to gift NFT.");
@@ -75,6 +86,12 @@ function Gifting() {
             <label>
                 Recipient: 
                 <input type="text" onChange={(e) => setRecipient(e.target.value)} />
+            </label>
+            <br />
+            <br />
+            <label>
+                email: 
+                <input type="text" onChange={(e) => setEmailto(e.target.value)} />
             </label>
             <br />
             <br />
