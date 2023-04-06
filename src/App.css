@@ -6,3 +6,34 @@
   font-family: 'Lato', sans-serif;
 }
 
+.style_a h1{
+  font-size: 40px;
+}
+
+.style_a input[type="text"] {
+  width: 320px;
+  height: 20px;
+  border-radius: 5px;
+  padding: 3px;
+}
+
+.style_a input[type="textarea"] {
+  width: 320px;
+  height: 40px;
+  border-radius: 5px;
+  padding: 3px;
+}
+
+.style_a input[type="email"] {
+  width: 320px;
+  height: 20px;
+  border-radius: 5px;
+  padding: 3px;
+}
+
+.style_a button {
+  width: 100px;
+  height: 30px;
+  border-radius: 20px;
+  padding: 3px;
+}
