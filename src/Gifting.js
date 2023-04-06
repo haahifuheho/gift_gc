@@ -9,7 +9,7 @@ emailjs.init('o5z8BrXFZtZW3NYAJ');
 function Gifting() {
     const [message, setMessage] = useState("");
     const [recipient, setRecipient] = useState("");
-    const [emailto, setEmailto] = useState("");
+    const [to_email, setEmailto] = useState("");
     const [tokenId, setTokenId] = useState("");
 
     const [web3, setWeb3] = useState(null);
@@ -63,10 +63,10 @@ function Gifting() {
                 const emailjsServiceId = "service_iakpmq7";
                 const emailjsTemplateId = "template_lk4s8w6";
                 const templateParams = {
-                    from_name: emailto,
-                    mail_message: message
+                to_email: to_email,
+                message: message
                 };
-                emailjs.send(emailjsServiceId,emailjsTemplateId, templateParams).then(()=>{
+                emailjs.send(emailjsServiceId,emailjsTemplateId,templateParams).then(()=>{
                 });
         } catch (error) {
             console.error(error);
@@ -77,22 +77,14 @@ function Gifting() {
     return (
         <div className="style_a">
             <h1>Gift Greeting Card NFT</h1>
-            <label>
-                Message: 
-                <input type="text" onChange={(e) => setMessage(e.target.value)} />
-            </label>
+
+            <input type="text" placeholder="Recipient"onChange={(e) => setRecipient(e.target.value)} />
             <br />
             <br />
-            <label>
-                Recipient: 
-                <input type="text" onChange={(e) => setRecipient(e.target.value)} />
-            </label>
+            <input type="textarea" placeholder="Message" onChange={(e) => setMessage(e.target.value)} />
             <br />
             <br />
-            <label>
-                email: 
-                <input type="text" onChange={(e) => setEmailto(e.target.value)} />
-            </label>
+            <input type="email" placeholder="E-mail" onChange={(e) => setEmailto(e.target.value)} />
             <br />
             <br />
             <button onClick={giftNFT}>Gift</button>
