@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Web3 from 'web3';
 import "./App.css";
-import abi from "./contracts/GiftNFTsbt.json";
+import abinft from "./contracts/GiftNFT.json";
+import abisbt from "./contracts/GiftNFTsbt.json";
 import giftbox from "./images/giftbox.jpg";
 import emailjs from "emailjs-com";
 emailjs.init('o5z8BrXFZtZW3NYAJ');
-
-
 
 function Gifting() {
     const [message, setMessage] = useState("");
@@ -21,13 +20,17 @@ function Gifting() {
     const [selectedOption, setSelectedOption] = useState('option1');
     const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+    let contractAddress;
+    let abi;
     if (event.target.value === 'option1') {
-
+        contractAddress = "0x2e7292d31c9439122ae7c8f54a145f5f446c8a18";
+        abi = abinft;
       } else if (event.target.value === 'option2') {
-
+        contractAddress = "0x57eC9DE356A8Ea2EFf613F799B1441343c70e6B9";
+        abi = abisbt;
       } 
+      setContract(new web3.eth.Contract(abi, contractAddress));
     }
-    
 
     useEffect(() => {
         const initWeb3 = async () => {
@@ -51,12 +54,19 @@ function Gifting() {
     useEffect(() => {
         if (web3) {
             const initContract = async () => {
-//                const contractAddress = "0x4AAbbb31f44941eFAd14f019Efe876916b57a293"; // コントラクトアドレスを入力
-//                const contractAddress = "0x2e7292d31c9439122ae7c8f54a145f5f446c8a18"; // コントラクトアドレスを入力
-                const contractAddress = "0x30bb48131b7bd9f39eb85093118a79591cbdf0fc"; // コントラクトアドレスを入力
-
-                const contract = new web3.eth.Contract(abi, contractAddress);
-                setContract(contract);
+                if (web3) {
+                    let contractAddress;
+                    let abi;
+                    if (selectedOption === 'option1') {
+                        contractAddress = "0x2e7292d31c9439122ae7c8f54a145f5f446c8a18";
+                        abi = abinft;
+                     } else if (selectedOption === 'option2') {
+                        contractAddress = "0x57eC9DE356A8Ea2EFf613F799B1441343c70e6B9";
+                        abi = abisbt;
+                     }
+                    const contract = new web3.eth.Contract(abi, contractAddress);
+                    setContract(contract);
+                }
             };
             initContract();
         }
@@ -66,6 +76,7 @@ function Gifting() {
     const [errorMessage, setErrorMessage] = useState("");
 
     const giftNFT = async () => {
+        
         try {
             const tx = await contract.methods.giftNFT(recipient, message).send({ from: accounts[0] });
             const event = tx.events[0];
@@ -130,8 +141,6 @@ function Gifting() {
              <br />
             {successMessage && <p>{successMessage}</p>}
             {errorMessage && <p>{errorMessage}</p>} 
-            
-
 
             <br />
             <img src={giftbox} alt="giftbox"/>
