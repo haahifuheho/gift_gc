@@ -37,3 +37,60 @@
   border-radius: 20px;
   padding: 3px;
 }
+
+
+
+
+
+
+
+/* radio 共通 */
+.style_a input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  position: relative;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 20px;      /* 生成ボタンサイズ */
+  width: 20px;       /* 生成ボタンサイズ */
+  vertical-align: -0.8rem;
+  transition:all .15s ease-out 0s;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin: .4rem;
+  outline: none;
+  border-radius: 10%;
+}
+
+.style_a input[type="radio"] {
+  border-radius: 50%;
+}
+.style_a input[type="radio"]:checked:before {
+  transform: scale(1);
+}
+.style_a input[type="radio"]:before {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 3px;
+  transform: scale(0);
+  transition: all ease-out 250ms;
+}
+
+.style_a input[type="radio"] {
+  border: 2px solid #645d5d;
+}
+.style_a input[type="radio"]:checked:before {
+  background: #6f7575;
+}
+
+
+
+

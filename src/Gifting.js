@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Web3 from 'web3';
 import "./App.css";
-import abi from "./contracts/GiftNFT.json";
+import abi from "./contracts/GiftNFTsbt.json";
 import giftbox from "./images/giftbox.jpg";
 import emailjs from "emailjs-com";
 emailjs.init('o5z8BrXFZtZW3NYAJ');
+
+
 
 function Gifting() {
     const [message, setMessage] = useState("");
@@ -15,6 +17,17 @@ function Gifting() {
     const [web3, setWeb3] = useState(null);
     const [accounts, setAccounts] = useState(null);
     const [contract, setContract] = useState(null);
+
+    const [selectedOption, setSelectedOption] = useState('option1');
+    const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+    if (event.target.value === 'option1') {
+
+      } else if (event.target.value === 'option2') {
+
+      } 
+    }
+    
 
     useEffect(() => {
         const initWeb3 = async () => {
@@ -39,7 +52,8 @@ function Gifting() {
         if (web3) {
             const initContract = async () => {
 //                const contractAddress = "0x4AAbbb31f44941eFAd14f019Efe876916b57a293"; // コントラクトアドレスを入力
-                const contractAddress = "0x2e7292d31c9439122ae7c8f54a145f5f446c8a18"; // コントラクトアドレスを入力
+//                const contractAddress = "0x2e7292d31c9439122ae7c8f54a145f5f446c8a18"; // コントラクトアドレスを入力
+                const contractAddress = "0x30bb48131b7bd9f39eb85093118a79591cbdf0fc"; // コントラクトアドレスを入力
 
                 const contract = new web3.eth.Contract(abi, contractAddress);
                 setContract(contract);
@@ -86,8 +100,26 @@ function Gifting() {
             <br />
             <input type="email" placeholder="E-mail" onChange={(e) => setEmailto(e.target.value)} />
             <br />
+            
             <br />
-            <button onClick={giftNFT}>Gift</button>
+            <label>Wallet：</label>
+            <label>
+
+            <input type="radio" value="option1" checked={selectedOption === 'option1'} onChange={handleOptionChange} />
+             あり
+            </label>
+            <label>
+            <input type="radio" value="option2" checked={selectedOption === 'option2'} onChange={handleOptionChange} />
+             なし
+            </label>
+            <br />
+
+            <br />
+            <button onClick={() => {
+                  if (window.confirm("Is it okay to send an on-chain message NFT gift?")) {
+                    giftNFT();
+                  }
+            }}>Gift</button>
             {tokenId && (
                 <div>
                     <p>Gifted NFT with Token ID: {tokenId}</p>
@@ -98,11 +130,15 @@ function Gifting() {
              <br />
             {successMessage && <p>{successMessage}</p>}
             {errorMessage && <p>{errorMessage}</p>} 
+            
+
+
             <br />
             <img src={giftbox} alt="giftbox"/>
             <br />
             <br />
             <label>This message stays forever because it's full on chain!</label>
+
         </div>
     );
 }
