@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Web3 from 'web3';
 import abi from "./contracts/GiftNFT.json";
+import "./Viewer.css";
 
 function Viewer() {
     const [ req, setReq ] = useState(new URLSearchParams(useLocation().search));
@@ -24,8 +25,16 @@ function Viewer() {
         })()
     });
     return (
-        <>{message}</>
+        <div className="card">
+            <div className="card-header">
+                <h1>For Your GIFT</h1>
+            </div>
+            <div className="card-body">
+                <p>{message}</p>
+            </div>
+        </div>
     );
 };
 
 export default Viewer;
+
