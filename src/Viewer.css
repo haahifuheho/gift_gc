@@ -1,6 +1,6 @@
 .card {
   background: linear-gradient(to bottom right, #f9a3d6, #fad0c4);
-  border: 2px solid #fff;
+  border: 2px solid #a52323;
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   color: #fff;
@@ -29,6 +29,6 @@
 }
 
 .card-body p {
-  margin: 0 0 10px;
+  margin: 0 0 10px;  
 }
 

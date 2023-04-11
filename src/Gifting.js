@@ -3,8 +3,8 @@ import Web3 from 'web3';
 import "./App.css";
 import abinft from "./contracts/GiftNFT.json";
 import abisbt from "./contracts/GiftNFTsbt.json";
-import giftbox from "./images/giftbox.jpg";
 import emailjs from "emailjs-com";
+import logo_mob from "./images/logo_mob.png"
 emailjs.init('o5z8BrXFZtZW3NYAJ');
 
 function Gifting() {
@@ -23,10 +23,11 @@ function Gifting() {
     let contractAddress;
     let abi;
     if (event.target.value === 'option1') {
-        contractAddress = "0x2e7292d31c9439122ae7c8f54a145f5f446c8a18";
+        contractAddress = "0x447aFeCebe733c617Ab3a98149D10520cCc2188F";
+//        contractAddress = "0x57eC9DE356A8Ea2EFf613F799B1441343c70e6B9";
         abi = abinft;
       } else if (event.target.value === 'option2') {
-        contractAddress = "0x57eC9DE356A8Ea2EFf613F799B1441343c70e6B9";
+        contractAddress = "0x2e7292d31c9439122ae7c8f54a145f5f446c8a18";
         abi = abisbt;
       } 
       setContract(new web3.eth.Contract(abi, contractAddress));
@@ -58,10 +59,11 @@ function Gifting() {
                     let contractAddress;
                     let abi;
                     if (selectedOption === 'option1') {
-                        contractAddress = "0x2e7292d31c9439122ae7c8f54a145f5f446c8a18";
+//                        contractAddress = "0x57eC9DE356A8Ea2EFf613F799B1441343c70e6B9";
+                        contractAddress = "0x447aFeCebe733c617Ab3a98149D10520cCc2188F";
                         abi = abinft;
                      } else if (selectedOption === 'option2') {
-                        contractAddress = "0x57eC9DE356A8Ea2EFf613F799B1441343c70e6B9";
+                        contractAddress = "0x2e7292d31c9439122ae7c8f54a145f5f446c8a18";
                         abi = abisbt;
                      }
                     const contract = new web3.eth.Contract(abi, contractAddress);
@@ -78,21 +80,26 @@ function Gifting() {
     const giftNFT = async () => {
         
         try {
-            const tx = await contract.methods.giftNFT(recipient, message).send({ from: accounts[0] });
+            const tx = await contract.methods.giftNFT(recipient, message).send({ from: accounts[0] })
+            .on('receipt', (receipt) => {
+            const tokenId = receipt.events.Gift.returnValues.tokenId;
+            const emailjsServiceId = "service_iakpmq7";
+            const emailjsTemplateId = "template_lk4s8w6";
+            const mailtokenId = tokenId;
+            const templateParams = {
+            to_email: to_email,
+            message: message + " URL:http://35.76.124.162:3000/viewer/?id=" + mailtokenId
+            };
+            emailjs.send(emailjsServiceId,emailjsTemplateId,templateParams).then(()=>{
+            });
+            });
             const event = tx.events[0];
             if (event && event.returnValues && event.returnValues[2]) {
                 const newTokenId = event.returnValues[2].toNumber();
                 setTokenId(newTokenId);
                 setSuccessMessage(`Gifted NFT with Token ID: ${newTokenId}`);
             }
-                const emailjsServiceId = "service_iakpmq7";
-                const emailjsTemplateId = "template_lk4s8w6";
-                const templateParams = {
-                to_email: to_email,
-                message: message
-                };
-                emailjs.send(emailjsServiceId,emailjsTemplateId,templateParams).then(()=>{
-                });
+
         } catch (error) {
             console.error(error);
             setErrorMessage("Failed to gift NFT.");
@@ -101,7 +108,11 @@ function Gifting() {
 
     return (
         <div className="style_a">
-            <h1>Gift Greeting Card NFT</h1>
+
+            <h1> 
+                <br />
+                <img src={logo_mob}  alt="logo_mob" width="400px"  /> 
+                </h1>
 
             <input type="text" placeholder="Recipient"onChange={(e) => setRecipient(e.target.value)} />
             <br />
@@ -130,7 +141,7 @@ function Gifting() {
                   if (window.confirm("Is it okay to send an on-chain message NFT gift?")) {
                     giftNFT();
                   }
-            }}>Gift</button>
+            }}>Send Message!</button>
             {tokenId && (
                 <div>
                     <p>Gifted NFT with Token ID: {tokenId}</p>
@@ -142,11 +153,10 @@ function Gifting() {
             {successMessage && <p>{successMessage}</p>}
             {errorMessage && <p>{errorMessage}</p>} 
 
+
             <br />
-            <img src={giftbox} alt="giftbox"/>
             <br />
-            <br />
-            <label>This message stays forever because it's full on chain!</label>
+            <label>This message stays forever because it's on chain!</label>
 
         </div>
     );
