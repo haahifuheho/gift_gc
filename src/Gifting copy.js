@@ -4,6 +4,7 @@ import "./App.css";
 import abi from "./contracts/GiftNFT.json";
 import giftbox from "./images/giftbox.jpg";
 import emailjs from "emailjs-com";
+import logo_mob from "./images/logo_nob.png"
 emailjs.init('o5z8BrXFZtZW3NYAJ');
 
 function Gifting() {
@@ -77,6 +78,7 @@ function Gifting() {
     return (
         <div className="style_a">
             <h1>Gift Greeting Card NFT</h1>
+            <img src={logo_mob} alt="logo_mob"/>
 
             <input type="text" placeholder="Recipient"onChange={(e) => setRecipient(e.target.value)} />
             <br />

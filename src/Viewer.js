@@ -11,14 +11,16 @@ function Viewer() {
     const [ web3, setWeb3 ] = useState(new Web3());
 
     web3.setProvider(new web3.providers.HttpProvider('https://rpc-mumbai.maticvigil.com/'));
-    const contractAddress = "0x4AAbbb31f44941eFAd14f019Efe876916b57a293";
+    const contractAddress = "0x447aFeCebe733c617Ab3a98149D10520cCc2188F";
+ //   const contractAddress = "0x4AAbbb31f44941eFAd14f019Efe876916b57a293";
     const contract = new web3.eth.Contract(abi, contractAddress);
     const nft = contract.methods.tokenMessage(id).call();
 
     useEffect(() => {
         (async() => {
             web3.setProvider(new web3.providers.HttpProvider('https://rpc-mumbai.maticvigil.com/'));
-            const contractAddress = "0x4AAbbb31f44941eFAd14f019Efe876916b57a293";
+            const contractAddress = "0x447aFeCebe733c617Ab3a98149D10520cCc2188F";
+//            const contractAddress = "0x4AAbbb31f44941eFAd14f019Efe876916b57a293";
             const contract = new web3.eth.Contract(abi, contractAddress);
             const nft = await contract.methods.tokenMessage(id).call();
             setMessage(nft);
