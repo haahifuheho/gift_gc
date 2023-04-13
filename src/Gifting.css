@@ -10,25 +10,26 @@
   font-size: 40px;
 }
 
-.style_a input[type="text"] {
-  
+.style_a input[type="text"] {  
   width: 320px;
   height: 20px;
+  border: 2px solid;
   border-radius: 5px;
   padding: 3px;
 }
 
 .style_a textarea {
-  vertical-align: top;
   width: 320px;
   height: 40px;
+  border: 2px solid;
   border-radius: 5px;
-  padding: 3px;
+  padding: 3p x;
 }
 
 .style_a input[type="email"] {
   width: 320px;
   height: 20px;
+  border: 2px solid;
   border-radius: 5px;
   padding: 3px;
 }
@@ -93,6 +94,25 @@
   background: #6f7575;
 }
 
+input, textarea, button{
+  font-family: inherit;
+}
 
+.modal {
+  background: #fff;
+  height: 100px;
+  padding: 20px;
+  border-Radius: 10px;
+}
 
+.modal button {
+  width: 100px;
+  height: 30px;
+  border-radius: 20px;
+  margin: 5px;
+  padding: 3px;
+}
 
+.disabled {
+  background: #AAAAAA;
+}

@@ -8,7 +8,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Gifting />} />
 	      <Route path="/Viewer" element={<Viewer />} />
-        <Route path="/Viewer2" element={<Viewer2 />} />>
+        <Route path="/Viewer2" element={<Viewer2 />} />
       </Routes>
   );
 };
