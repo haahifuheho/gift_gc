@@ -3,7 +3,7 @@ import Web3 from 'web3';
 import "./Gifting.css";
 import abi from "./contracts/GiftMessage.json";
 import emailjs from "emailjs-com";
-import logo_mob from "./images/logo_mob.png"
+import logo_mob from "./images/logo1.png"
 import useModal from './Modal';
 emailjs.init('o5z8BrXFZtZW3NYAJ');
 
