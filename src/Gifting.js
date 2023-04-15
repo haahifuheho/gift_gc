@@ -20,20 +20,20 @@ function Gifting() {
 
     const [selectedOption, setSelectedOption] = useState('option1');
 
-    const {Modal, openModal, closeModal} = useModal();
+    const { Modal, openModal, closeModal } = useModal();
     const [disabled, setDisabled] = useState(false);
 
     const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-    let contractAddress;
-    let abi;
-    if (event.target.value === 'option1') {
-	setDisabled(false);
-	setRecipient(inputRecipient.current.value);
-      } else if (event.target.value === 'option2') {
-	setDisabled(true);
-	setRecipient(process.env.REACT_APP_MANAGEMENT_ADDRESS);
-      } 
+        setSelectedOption(event.target.value);
+        let contractAddress;
+        let abi;
+        if (event.target.value === 'option1') {
+            setDisabled(false);
+            setRecipient(inputRecipient.current.value);
+        } else if (event.target.value === 'option2') {
+            setDisabled(true);
+            setRecipient(process.env.REACT_APP_MANAGEMENT_ADDRESS);
+        }
     }
 
     useEffect(() => {
@@ -50,10 +50,10 @@ function Gifting() {
                 }
             } else {
                 console.error("Please install MetaMask!");
-		web3.setProvider(new web3.providers.HttpProvider('https://rpc-mumbai.maticvigil.com/'));
+                web3.setProvider(new web3.providers.HttpProvider('https://rpc-mumbai.maticvigil.com/'));
                 setWeb3(web3);
-	    }
-	    setContract(new web3.eth.Contract(abi, process.env.REACT_APP_CONTRACT_ADDRESS));
+            }
+            setContract(new web3.eth.Contract(abi, process.env.REACT_APP_CONTRACT_ADDRESS));
         };
         initWeb3();
     }, []);
@@ -74,56 +74,56 @@ function Gifting() {
     const [errorMessage, setErrorMessage] = useState("");
 
     const giftNFT = async () => {
-        
+
         try {
             const tx = await contract.methods.giftNFT(recipient, message).send({ from: accounts[0] })
-            .on('receipt', (receipt) => {
-            const tokenId = receipt.events.Gift.returnValues.tokenId;
-            console.log(emailjsTemplateId);
-            const emailjsServiceId = process.env.REACT_APP_EMAILJS_SERVICE_ID;
-	    const emailjsTemplateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
-            const mailtokenId = tokenId;
-            const templateParams = {
-            to_email: to_email,
-            message: message + " URL:http://35.76.124.162:4000/viewer/?id=" + mailtokenId
-            };
-            emailjs.send(emailjsServiceId,emailjsTemplateId,templateParams).then(()=>{
-            });
-            });
+                    .on('receipt', (receipt) => {
+                    const tokenId = receipt.events.Gift.returnValues.tokenId;
+                    const emailjsServiceId = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+                    const emailjsTemplateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
+                    const mailtokenId = tokenId;
+                    const templateParams = {
+                        to_email: to_email,
+                        message: message + " URL:http://35.76.124.162:3000/viewer2/?id=" + mailtokenId
+                    };
+                    emailjs.send(emailjsServiceId, emailjsTemplateId, templateParams).then(() => {
+                    });
+               });
+                
             const event = tx.events[0];
             if (event && event.returnValues && event.returnValues[2]) {
                 const newTokenId = event.returnValues[2].toNumber();
                 setTokenId(newTokenId);
                 setSuccessMessage(`Gifted NFT with Token ID: ${newTokenId}`);
-		setErrorMessage("");
+                setErrorMessage("");
             }
 
         } catch (error) {
             console.error(error);
             setErrorMessage("Failed to gift NFT.");
-	    setSuccessMessage("");
+            setSuccessMessage("");
         }
     };
 
     return (
         <div className="style_a">
 
-            <h1> 
+            <h1>
                 <br />
-                <img src={logo_mob}  alt="logo_mob" width="400px"/> 
+                <img src={logo_mob} alt="logo_mob" width="400px" />
             </h1>
             <label>Wallet：</label>
             <label>
-            <input type="radio" value="option1" checked={selectedOption === 'option1'} onChange={handleOptionChange} />
-             あり
+                <input type="radio" value="option1" checked={selectedOption === 'option1'} onChange={handleOptionChange} />
+                あり
             </label>
             <label>
-            <input type="radio" value="option2" checked={selectedOption === 'option2'} onChange={handleOptionChange} />
-             なし
+                <input type="radio" value="option2" checked={selectedOption === 'option2'} onChange={handleOptionChange} />
+                なし
             </label>
             <br />
 
-            <input type="text" className={disabled ? "disabled" : ""} placeholder="Recipient"onChange={(e) => setRecipient(e.target.value)} ref={inputRecipient} disabled={disabled}/>
+            <input type="text" className={disabled ? "disabled" : ""} placeholder="Recipient" onChange={(e) => setRecipient(e.target.value)} ref={inputRecipient} disabled={disabled} />
             <br />
             <br />
             <textarea placeholder="Message" onChange={(e) => setMessage(e.target.value)} />
@@ -133,16 +133,16 @@ function Gifting() {
             <br />
             <br />
             <br />
-	    <button onClick={openModal}>Send Message!</button>
+            <button onClick={openModal}>Send Message!</button>
             <Modal>
-	        <div className="modal">
+                <div className="modal">
                     <p>Is it okay to send an on-chain message NFT gift?</p>
-	            <button onClick={() => {
-		        giftNFT();
-			closeModal();
-		    }}>OK</button>
+                    <button onClick={() => {
+                        giftNFT();
+                        closeModal();
+                    }}>OK</button>
                     <button onClick={closeModal}>キャンセル</button>
-	        </div>
+                </div>
             </Modal>
             {tokenId && (
                 <div>
@@ -151,15 +151,15 @@ function Gifting() {
                     <p>Recipient: {recipient}</p>
                 </div>
             )}
-             <br />
+            <br />
             {successMessage && <p>{successMessage}</p>}
-            {errorMessage && <p>{errorMessage}</p>} 
+            {errorMessage && <p>{errorMessage}</p>}
 
 
             <br />
             <br />
             <label>This message stays forever because it's on chain!</label>
-	</div>
+        </div>
     );
 }
 

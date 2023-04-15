@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import Web3 from 'web3';
 import abi from "./contracts/GiftNFT.json";
 import "./Viewer2.css";
+import greeting from "./images/greeting1.jpg"
+import logo_mob from "./images/logo1.png"
 
 function Viewer2() {
     const [ req, setReq ] = useState(new URLSearchParams(useLocation().search));
@@ -11,28 +13,35 @@ function Viewer2() {
     const [ web3, setWeb3 ] = useState(new Web3());
 
     web3.setProvider(new web3.providers.HttpProvider('https://rpc-mumbai.maticvigil.com/'));
-    const contractAddress = "0x447aFeCebe733c617Ab3a98149D10520cCc2188F";
+    const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
     const contract = new web3.eth.Contract(abi, contractAddress);
     const nft = contract.methods.tokenMessage(id).call();
 
     useEffect(() => {
         (async() => {
             web3.setProvider(new web3.providers.HttpProvider('https://rpc-mumbai.maticvigil.com/'));
-            const contractAddress = "0x447aFeCebe733c617Ab3a98149D10520cCc2188F";
+            const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
             const contract = new web3.eth.Contract(abi, contractAddress);
             const nft = await contract.methods.tokenMessage(id).call();
             setMessage(nft);
         })()
     });
     return (
-        <div className="card2">
-            <div className="card2-header">
-                <h1>Messasge For You</h1>
+        <div >
+            <div className = "greeting">
+            <p>NFT greeting card has been presented!</p>
+            <p1>Message for You</p1>
+            <p2>{message}</p2>
+            <img src={greeting}  />
             </div>
-            <div className="card2-body">
-                <p>{message}</p>
+            <div className = "logo">
+                <br />
+                <br />
+                <img src={logo_mob} width="200px" />
             </div>
         </div>
+        
+
     );
 };
 
