@@ -5,15 +5,15 @@ import abi from "./contracts/GiftNFT.json";
 import "./Viewer.css";
 
 function Viewer() {
-    const [ req, setReq ] = useState(new URLSearchParams(useLocation().search));
+    const [ req ] = useState(new URLSearchParams(useLocation().search));
     const [ message, setMessage] = useState();
-    const [ id, setId ] = useState(req.get('id'));
-    const [ web3, setWeb3 ] = useState(new Web3());
+    const [ id ] = useState(req.get('id'));
+    const [ web3 ] = useState(new Web3());
 
     web3.setProvider(new web3.providers.HttpProvider('https://rpc-mumbai.maticvigil.com/'));
-    const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
-    const contract = new web3.eth.Contract(abi, contractAddress);
-    const nft = contract.methods.tokenMessage(id).call();
+//    const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
+//    const contract = new web3.eth.Contract(abi, contractAddress);
+//    const nft = contract.methods.tokenMessage(id).call();
 
     useEffect(() => {
         (async() => {

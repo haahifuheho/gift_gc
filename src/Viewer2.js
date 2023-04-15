@@ -7,16 +7,12 @@ import greeting from "./images/greeting1.jpg"
 import logo_mob from "./images/logo1.png"
 
 function Viewer2() {
-    const [ req, setReq ] = useState(new URLSearchParams(useLocation().search));
+    const [ req ] = useState(new URLSearchParams(useLocation().search));
     const [ message, setMessage] = useState();
-    const [ id, setId ] = useState(req.get('id'));
-    const [ web3, setWeb3 ] = useState(new Web3());
+    const [ id ] = useState(req.get('id'));
+    const [ web3 ] = useState(new Web3());
 
     web3.setProvider(new web3.providers.HttpProvider('https://rpc-mumbai.maticvigil.com/'));
-    const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
-    const contract = new web3.eth.Contract(abi, contractAddress);
-    const nft = contract.methods.tokenMessage(id).call();
-
     useEffect(() => {
         (async() => {
             web3.setProvider(new web3.providers.HttpProvider('https://rpc-mumbai.maticvigil.com/'));
@@ -32,16 +28,14 @@ function Viewer2() {
             <p>NFT greeting card has been presented!</p>
             <p1>Message for You</p1>
             <p2>{message}</p2>
-            <img src={greeting}  />
+            <img src={greeting}  alt="greeting card" />
             </div>
             <div className = "logo">
                 <br />
                 <br />
-                <img src={logo_mob} width="200px" />
+                <img src={logo_mob} width="200px" alt="logo" />
             </div>
         </div>
-        
-
     );
 };
 

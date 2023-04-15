@@ -25,8 +25,8 @@ function Gifting() {
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
-        let contractAddress;
-        let abi;
+//        let contractAddress;
+//        let abi;
         if (event.target.value === 'option1') {
             setDisabled(false);
             setRecipient(inputRecipient.current.value);
@@ -56,7 +56,7 @@ function Gifting() {
             setContract(new web3.eth.Contract(abi, process.env.REACT_APP_CONTRACT_ADDRESS));
         };
         initWeb3();
-    }, []);
+    }, [web3]);
 
     useEffect(() => {
         if (web3) {
