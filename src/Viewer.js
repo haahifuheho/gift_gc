@@ -11,9 +11,9 @@ function Viewer() {
     const [ web3 ] = useState(new Web3());
 
     web3.setProvider(new web3.providers.HttpProvider('https://rpc-mumbai.maticvigil.com/'));
-//    const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
-//    const contract = new web3.eth.Contract(abi, contractAddress);
-//    const nft = contract.methods.tokenMessage(id).call();
+    const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
+    const contract = new web3.eth.Contract(abi, contractAddress);
+    const nft = contract.methods.tokenMessage(id).call();
 
     useEffect(() => {
         (async() => {
